@@ -1,0 +1,82 @@
+default_install_hook_types: [pre-commit, prepare-commit-msg, commit-msg]
+default_language_version:
+  python: python3.11
+ci:
+  autofix_commit_msg: ":rotating_light: auto fix by pre-commit hooks"
+  autofix_prs: true
+  autoupdate_branch: master
+  autoupdate_schedule: monthly
+  autoupdate_commit_msg: ":arrow_up: auto update by pre-commit hooks"
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-toml
+      - id: check-yaml
+      - id: pretty-format-json
+        args:
+          - --autofix
+          - --indent
+          - "4"
+      - id: check-symlinks
+      - id: end-of-file-fixer
+      - id: name-tests-test
+        args:
+          - --pytest-test-first
+      - id: trailing-whitespace
+
+  - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
+    rev: v2.12.0
+    hooks:
+      - id: pretty-format-yaml
+        args:
+          - --autofix
+          - --indent
+          - "2"
+          - --offset
+          - "2"
+          - --preserve-quotes
+        language: python
+        stages: [commit]
+      - id: pretty-format-toml
+        args:
+          - --autofix
+          - --no-sort
+          - --indent
+          - "4"
+        exclude: "poetry.lock"
+        language: python
+        stages: [commit]
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.4.5
+    hooks:
+      - id: ruff
+        args:
+          - --fix
+          - --exit-non-zero-on-fix
+        language: python
+        stages: [commit]
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        language: python
+        stages: [commit]
+
+  - repo: https://github.com/psf/black
+    rev: 24.4.2
+    hooks:
+      - id: black
+        language: python
+        stages: [commit]
+
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v3.27.0
+    hooks:
+      - id: commitizen
+        stages: [commit-msg]
+        language: python

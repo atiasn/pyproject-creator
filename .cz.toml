@@ -1,0 +1,139 @@
+[tool.commitizen]
+name = "cz_customize"
+tag_format = "$version"
+version_scheme = "pep440"
+version_provider = "poetry"
+update_changelog_on_bump = true
+major_version_zero = true
+version_files = ["pyproject.toml:^version"]
+bump_message = "🔖 release: $current_version → $new_version"
+
+[tool.commitizen.customize]
+message_template = "{{change_type}}: {{message}}"
+example = "✨ feat: this feature enables customization through config file"
+schema = "<change_type>: <message>"
+schema_pattern = "^(?P<emoji>[^\\s]+)\\s(?P<change_type>feat|fix|docs|style|refactor|test|deploy|ui|release|types|lint|add_dep|rm_dep|downgrade|upgrade|pin|ci_fix|ci_update|analytics|config|scripts|i18n|typos|init|wip|revert|merge|compiled|api|move|breaking|accessibility|comments|drunk|logs|rm_logs|ux|architecture|gitignore|flags|catch_errors|deprecate|rm_dead_code|dev_exp|performance|rm_code|assets):\\s(?P<message>.+)"
+bump_pattern = "^(breaking|feat|fix|hotfix)"
+bump_map = {"breaking" = "MAJOR", "feat" = "MINOR", "fix" = "PATCH", "hotfix" = "PATCH"}
+change_type_order = ["BREAKING CHANGE", "feat", "fix", "perf", "refactor", "docs", "style", "test", "build", "ci", "chore", "revert", "release", "wip"]
+info = """
+This is a customized Commitizen configuration for our project.
+
+Commit Types:
+- ✨ feat: Introduce new features.
+- 🐛 fix: Fix a bug.
+- 📝 docs: Add or update documentation.
+- 🎨 style: Improve structure/format of the code.
+- ♻️ refactor: Refactor code.
+- ✅ test: Add, update, or pass tests.
+- 🚀 deploy: Deploy stuff.
+- 💄 ui: Add or update the UI and style files.
+- 🔖 release: Release / Version tags.
+- 🏷️ types: Add or update types.
+- 🚨 lint: Fix compiler/linter warnings.
+- ➕ add_dep: Add a dependency.
+- ➖ rm_dep: Remove a dependency.
+- ⬇️ downgrade: Downgrade dependencies.
+- ⬆️ upgrade: Upgrade dependencies.
+- 📌 pin: Pin dependencies to specific versions.
+- 💚 ci_fix: Fix CI Build.
+- 👷 ci_update: Add or update CI build system.
+- 📈 analytics: Add or update analytics or track code.
+- 🔧 config: Add or update configuration files.
+- 🔨 scripts: Add or update development scripts.
+- 🌐 i18n: Internationalization and localization.
+- ✏️ typos: Fix typos.
+- 🎉 init: Begin a project.
+- 🚧 wip: Work in progress.
+- ⏪️ revert: Revert changes.
+- 🔀 merge: Merge branches.
+- 📦️ compiled: Add or update compiled files or packages.
+- 👽️ api: Update code due to external API changes.
+- 🚚 move: Move or rename resources (e.g., files, paths, routes).
+- 💥 breaking: Introduce breaking changes.
+- ♿️ accessibility: Improve accessibility.
+- 💡 comments: Add or update comments in source code.
+- 🍻 drunk: Write code drunkenly.
+- 🔊 logs: Add or update logs.
+- 🔇 rm_logs: Remove logs.
+- 🚸 ux: Improve user experience/usability.
+- 🏗️ architecture: Make architectural changes.
+- 🙈 gitignore: Add or update a .gitignore file.
+- 🚩 flags: Add, update, or remove feature flags.
+- 🥅 catch_errors: Catch errors.
+- 🗑️ deprecate: Deprecate code that needs to be cleaned up.
+- ⚰️ rm_dead_code: Remove dead code.
+- 🧑‍💻 dev_exp: Improve developer experience.
+- ⚡️ performance: Improve performance.
+- 🔥 rm_code: Remove code or files.
+- 🍱 assets: Add or update assets.
+
+Each commit message should follow this format:
+<change_type>: <message>
+
+Example:
+✨ feat: Add new authentication module
+"""
+commit_parser = "^(?P<emoji>[^\\s]+)\\s(?P<change_type>feat|fix|docs|style|refactor|test|deploy|ui|release|types|lint|add_dep|rm_dep|downgrade|upgrade|pin|ci_fix|ci_update|analytics|config|scripts|i18n|typos|init|wip|revert|merge|compiled|api|move|breaking|accessibility|comments|drunk|logs|rm_logs|ux|architecture|gitignore|flags|catch_errors|deprecate|rm_dead_code|dev_exp|performance|rm_code|assets):\\s(?P<message>.+)$"
+changelog_pattern = "^(feat|fix|docs|style|refactor|test|deploy|ui|release|types|lint|add_dep|rm_dep|downgrade|upgrade|pin|ci_fix|ci_update|analytics|config|scripts|i18n|typos|init|wip|revert|merge|compiled|api|move|breaking|accessibility|comments|drunk|logs|rm_logs|ux|architecture|gitignore|flags|catch_errors|deprecate|rm_dead_code|dev_exp|performance|rm_code|assets)?(!)?"
+change_type_map = {"feat" = "Feat", "fix" = "Fix"}
+
+[[tool.commitizen.customize.questions]]
+type = "list"
+name = "change_type"
+choices = [
+    {value = "✨ feat", name = "✨ feat: Introduce new features."},
+    {value = "🐛 fix", name = "🐛 fix: Fix a bug."},
+    {value = "📝 docs", name = "📝 docs: Add or update documentation."},
+    {value = "📄 license", name = "📄 license: Add or update license."},
+    {value = "🎨 style", name = "🎨 style: Improve structure / format of the code."},
+    {value = "♻️ refactor", name = "♻️ refactor: Refactor code."},
+    {value = "✅ test", name = "✅ test: Add, update, or pass tests."},
+    {value = "🚀 deploy", name = "🚀 deploy: Deploy stuff."},
+    {value = "💄 ui", name = "💄 ui: Add or update the UI and style files."},
+    {value = "🔖 release", name = "🔖 release: Release / Version tags."},
+    {value = "🏷️ types", name = "🏷️ types: Add or update types."},
+    {value = "🚨 lint", name = "🚨 lint: Fix compiler / linter warnings."},
+    {value = "➕ add_dep", name = "➕ add_dep: Add a dependency."},
+    {value = "➖ rm_dep", name = "➖ rm_dep: Remove a dependency."},
+    {value = "⬇️ downgrade", name = "⬇️ downgrade: Downgrade dependencies."},
+    {value = "⬆️ upgrade", name = "⬆️ upgrade: Upgrade dependencies."},
+    {value = "📌 pin", name = "📌 pin: Pin dependencies to specific versions."},
+    {value = "💚 ci_fix", name = "💚 ci_fix: Fix CI Build."},
+    {value = "👷 ci_update", name = "👷 ci_update: Add or update CI build system."},
+    {value = "📈 analytics", name = "📈 analytics: Add or update analytics or track code."},
+    {value = "🔧 config", name = "🔧 config: Add or update configuration files."},
+    {value = "🔨 scripts", name = "🔨 scripts: Add or update development scripts."},
+    {value = "🌐 i18n", name = "🌐 i18n: Internationalization and localization."},
+    {value = "✏️ typos", name = "✏️ typos: Fix typos."},
+    {value = "🎉 init", name = "🎉 init: Begin a project."},
+    {value = "🚧 wip", name = "🚧 wip: Work in progress."},
+    {value = "⏪️ revert", name = "⏪️ revert: Revert changes."},
+    {value = "🔀 merge", name = "🔀 merge: Merge branches."},
+    {value = "📦️ compiled", name = "📦️ compiled: Add or update compiled files or packages."},
+    {value = "👽️ api", name = "👽️ api: Update code due to external API changes."},
+    {value = "🚚 move", name = "🚚 move: Move or rename resources (e.g.: files, paths, routes)."},
+    {value = "💥 breaking", name = "💥 breaking: Introduce breaking changes."},
+    {value = "♿️ accessibility", name = "♿️ accessibility: Improve accessibility."},
+    {value = "💡 comments", name = "💡 comments: Add or update comments in source code."},
+    {value = "🍻 drunk", name = "🍻 drunk: Write code drunkenly."},
+    {value = "🔊 logs", name = "🔊 logs: Add or update logs."},
+    {value = "🔇 rm_logs", name = "🔇 rm_logs: Remove logs."},
+    {value = "🚸 ux", name = "🚸 ux: Improve user experience / usability."},
+    {value = "🏗️ architecture", name = "🏗️ architecture: Make architectural changes."},
+    {value = "🙈 gitignore", name = "🙈 gitignore: Add or update a .gitignore file."},
+    {value = "🚩 flags", name = "🚩 flags: Add, update, or remove feature flags."},
+    {value = "🥅 catch_errors", name = "🥅 catch_errors: Catch errors."},
+    {value = "🗑️ deprecate", name = "🗑️ deprecate: Deprecate code that needs to be cleaned up."},
+    {value = "⚰️ rm_dead_code", name = "⚰️ rm_dead_code: Remove dead code."},
+    {value = "🧑‍💻 dev_exp", name = "🧑‍💻 dev_exp: Improve developer experience."},
+    {value = "⚡️ performance", name = "⚡️ performance: Improve performance."},
+    {value = "🔥 rm_code", name = "🔥 rm_code: Remove code or files."},
+    {value = "🍱 assets", name = "🍱 assets: Add or update assets."}
+]
+message = "Select the type of change you are committing"
+
+[[tool.commitizen.customize.questions]]
+type = "input"
+name = "message"
+message = "Please input commit message body:\n"
