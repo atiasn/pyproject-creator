@@ -14,6 +14,7 @@ repos:
       - id: check-json
       - id: check-merge-conflict
       - id: check-toml
+        exclude: poetry.lock|.*template/pyproject.template$
       - id: check-yaml
       - id: pretty-format-json
         args:
@@ -46,17 +47,7 @@ repos:
           - --no-sort
           - --indent
           - "4"
-        exclude: "poetry.lock"
-        language: python
-        stages: [commit]
-
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.4.5
-    hooks:
-      - id: ruff
-        args:
-          - --fix
-          - --exit-non-zero-on-fix
+        exclude: poetry.lock|.*template/pyproject.template$
         language: python
         stages: [commit]
 
@@ -73,6 +64,19 @@ repos:
       - id: black
         language: python
         stages: [commit]
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.4.5
+    hooks:
+      - id: ruff
+        args:
+          - --fix
+          - --exit-non-zero-on-fix
+          - --ignore
+          - PT004
+        language: python
+        stages: [commit]
+      - id: ruff-format
 
   - repo: https://github.com/commitizen-tools/commitizen
     rev: v3.27.0
