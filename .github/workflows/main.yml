@@ -7,7 +7,6 @@ on:
   push:
     branches: ["dev"]
   pull_request:
-    branches: ["master"]
 
 permissions:
   contents: read
@@ -23,6 +22,7 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: "3.11"
+      - uses: pre-commit/action@v3.0.1
       - name: Install poetry
         run: |
           python -m pip install --upgrade pip
@@ -34,6 +34,7 @@ jobs:
           poetry install
       - name: Lint with pre-commit
         run: |
+          pre-commit install
           pre-commit run --all-files -vvv
       - name: Test with pytest
         run: |
