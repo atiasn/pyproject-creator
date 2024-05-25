@@ -25,6 +25,10 @@ logger: "Logger" = loguru.logger
 #     logging.Formatter("[%(asctime)s %(name)s] %(levelname)s: %(message)s"))
 # logger.addHandler(default_handler)
 
+LOG_LEVEL = "<set level>"
+LOG_SENSITIZE = "<set sensitive>"  # True or False
+PROJECT_NAME = "<set project name>"
+
 
 class LoguruHandler(logging.Handler):  # pragma: no cover
     """logging 与 loguru 之间的桥梁，将 logging 的日志转发到 loguru。"""
@@ -40,9 +44,7 @@ class LoguruHandler(logging.Handler):  # pragma: no cover
             frame = frame.f_back
             depth += 1
 
-        logger.opt(depth=depth, exception=record.exc_info).log(
-            level, record.getMessage()
-        )
+        logger.opt(depth=depth, exception=record.exc_info).log(level, record.getMessage())
 
 
 def desensitize_cookie_values(cookie):
@@ -72,16 +74,16 @@ def desensitize_cookie_data(message):
 
 
 def default_filter(record: "Record"):
-    log_level = settings.LOG_LEVEL
+    log_level = LOG_LEVEL
     levelno = logger.level(log_level).no if isinstance(log_level, str) else log_level
-    if settings.LOG_SENSITIZE:
+    if LOG_SENSITIZE:
         record["message"] = desensitize_cookie_data(record["message"])
     return record["level"].no >= levelno
 
 
 logger.remove()
 
-if settings.LOG_LEVEL == "DEBUG":
+if LOG_LEVEL == "DEBUG":
     diagnose = True
     backtrace = True
     default_format: str = (
@@ -96,10 +98,7 @@ else:
     diagnose = False
     backtrace = False
     default_format: str = (
-        "<g>{time:MM-DD HH:mm:ss}</g> "
-        "[<lvl>{level}</lvl>] "
-        f"<c><u>{PROJECT_NAME}</u></c> | "
-        "{message}"
+        "<g>{time:MM-DD HH:mm:ss}</g> " "[<lvl>{level}</lvl>] " f"<c><u>{PROJECT_NAME}</u></c> | " "{message}"
     )
     """默认日志格式"""
 
