@@ -33,7 +33,10 @@ jobs:
       - name: Install dependencies
         run: |
           poetry install
-      - name: List poetry envs poetry env list poetry env use 3.11
+      - name: List poetry envs
+        run: |
+          poetry env list
+          poetry env use 3.11
 
       - name: Test with pytest
         run: |
