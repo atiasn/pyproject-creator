@@ -98,17 +98,12 @@ def create_project() -> None:
     author: str = click.prompt("Author name", default="Your Name <your.email@example.com>", type=str)
     python_version: str = click.prompt("Python version", default="3.11", type=str)
     project_license: str = click.prompt("Project license", default="", type=str)
-    need_logs: str = click.prompt("Create logs package? (Y/n)", default="Y", type=str, show_default=False)
-    need_tests: str = click.prompt(
-        "Create tests(pytest) directory? (Y/n)",
-        default="Y",
-        type=str,
-        show_default=False,
-    )
+    need_logs: str = click.prompt("Create logs package? (Y/n)", default="Y", type=str)
+    need_tests: str = click.prompt("Create tests(pytest) directory? (Y/n)", default="Y", type=str)
+    github_action: str = click.prompt("Create github action for project(master branch)? (Y/n)", default="n", type=str)
 
     # Copy template files
     template_path: Path = BASE_PATH / "template"
-    shutil.copy(template_path / "pyproject.template", project_path / "pyproject.toml")
     shutil.copy(template_path / ".gitignore", project_path / ".gitignore")
     shutil.copy(
         template_path / ".pre-commit-config.yaml",
@@ -119,7 +114,11 @@ def create_project() -> None:
         shutil.copytree(template_path / "logs", project_path / src_path / "logs")
     if need_tests.lower() == "y":
         shutil.copytree(template_path / "tests", project_path / "tests")
+    if github_action.lower() == "y":
+        shutil.copytree(template_path / "github_action", project_path / ".github")
 
+    # create pyproject.toml
+    shutil.copy(template_path / "pyproject.template", project_path / "pyproject.toml")
     with open(project_path / "pyproject.toml") as _file:
         poetry_config = _file.read()
     template = jinja2.Template(poetry_config)

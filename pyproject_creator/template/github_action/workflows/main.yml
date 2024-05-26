@@ -1,6 +1,8 @@
 name: Pyproject Creator CI
 
 on:
+  push:
+    branches: ["master"]
   pull_request:
 
 permissions:

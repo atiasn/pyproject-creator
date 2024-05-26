@@ -101,6 +101,7 @@ def test_create_project(runner, mock_poetry_installed, monkeypatch, rootdir, pro
                 "",  # Project license
                 "Y",  # Create logs package
                 "Y",  # Create tests directory
+                "Y",  # Create github actions
             ]
         )
         + "\n"
@@ -123,6 +124,7 @@ def test_create_project(runner, mock_poetry_installed, monkeypatch, rootdir, pro
     assert (project_path / "tests").exists()
     assert (project_path / "tests" / "test_sample.py").exists()
     assert (project_path / "README.md").exists()
+    assert (project_path / ".github").exists()
 
     # Verify content of pyproject.toml
     assert (project_path / "pyproject.toml").exists()
@@ -159,6 +161,7 @@ def test_create_project_without_tests_logs(runner, mock_poetry_installed, monkey
                 "MIT",  # Project license
                 "n",  # Create logs package
                 "n",  # Create tests directory
+                "n",  # Create github actions
             ]
         )
         + "\n"
@@ -181,6 +184,7 @@ def test_create_project_without_tests_logs(runner, mock_poetry_installed, monkey
     assert not (project_path / "tests").exists()
     assert not (project_path / "tests" / "test_sample.py").exists()
     assert (project_path / "README.md").exists()
+    assert not (project_path / ".github").exists()
 
     # Verify content of pyproject.toml
     assert (project_path / "pyproject.toml").exists()
