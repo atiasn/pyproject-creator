@@ -99,7 +99,10 @@ else:
     diagnose = False
     backtrace = False
     default_format = (
-        "<g>{time:MM-DD HH:mm:ss}</g> " "[<lvl>{level}</lvl>] " f"<c><u>{PROJECT_NAME}</u></c> | " "{message}"
+        "<g>{time:MM-DD HH:mm:ss}</g> "
+        "[<lvl>{level}</lvl>] "
+        f"<c><u>{PROJECT_NAME}</u></c> | "
+        "{message}"
     )
     """默认日志格式"""
 
