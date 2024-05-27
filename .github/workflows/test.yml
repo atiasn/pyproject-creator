@@ -44,7 +44,7 @@ jobs:
         run: poetry install
 
       - name: Check code format and typechecking
-        uses: poetry run pre-commit run --all-files -vvv
+        run: poetry run pre-commit run --all-files -vvv
 
       - name: Run tests
         run: poetry run pytest
