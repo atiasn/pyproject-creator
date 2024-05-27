@@ -47,4 +47,4 @@ jobs:
         run: poetry run pre-commit run --all-files -vvv
 
       - name: Run tests
-        run: poetry run pytest
+        run: poetry run pytest tests -s
