@@ -1,7 +1,7 @@
 import subprocess
 
 
-def check_cuda():
+def check_cuda() -> bool:
     try:
         # Check if CUDA is available
         subprocess.check_output(["nvcc", "--version"])
@@ -10,7 +10,7 @@ def check_cuda():
         return False
 
 
-def install(env="dev"):
+def install(env: str = "dev") -> None:
     if env == "dev":
         install_cmd = ["poetry", "install"]
     elif env == "prod":
@@ -28,9 +28,9 @@ def install(env="dev"):
     subprocess.check_call(install_cmd)
 
 
-def install_dev():
+def install_dev() -> None:
     install()
 
 
-def install_prod():
+def install_prod() -> None:
     install("prod")

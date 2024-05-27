@@ -31,7 +31,9 @@ def check_poetry_installed() -> None:
         click.echo(
             "Please install Poetry by following the instructions at https://python-poetry.org/docs/#installation"
         )
-        click.echo("Installation command: `curl -sSL https://install.python-poetry.org | python3 -`")
+        click.echo(
+            "Installation command: `curl -sSL https://install.python-poetry.org | python3 -`"
+        )
         exit(1)
 
 
@@ -87,7 +89,7 @@ def prompt_project_details() -> tuple[Path, Path]:
     exit(1)
 
 
-@click.command()
+@click.command()  # type: ignore
 def create_project() -> None:
     """Create a new Python project with Poetry, pre-commit, logs, tests."""
 
@@ -95,12 +97,16 @@ def create_project() -> None:
     project_path, src_path = prompt_project_details()
 
     description: str = click.prompt("Project description", default="", type=str)
-    author: str = click.prompt("Author name", default="Your Name <your.email@example.com>", type=str)
+    author: str = click.prompt(
+        "Author name", default="Your Name <your.email@example.com>", type=str
+    )
     python_version: str = click.prompt("Python version", default="3.11", type=str)
     project_license: str = click.prompt("Project license", default="", type=str)
     need_logs: str = click.prompt("Create logs package? (Y/n)", default="Y", type=str)
     need_tests: str = click.prompt("Create tests(pytest) directory? (Y/n)", default="Y", type=str)
-    github_action: str = click.prompt("Create github action for project(master branch)? (Y/n)", default="n", type=str)
+    github_action: str = click.prompt(
+        "Create github action for project(master branch)? (Y/n)", default="n", type=str
+    )
 
     # Copy template files
     template_path: Path = BASE_PATH / "template"

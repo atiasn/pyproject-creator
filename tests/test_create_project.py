@@ -1,21 +1,23 @@
 import os
 import subprocess
+from pathlib import Path
 
 import click
 import pytest
 from click.testing import CliRunner
+from _pytest.monkeypatch import MonkeyPatch
 
 from pyproject_creator.cli import run_command, create_project, check_poetry_installed
 
 
-@pytest.fixture
-def runner():
+@pytest.fixture  # type: ignore
+def runner() -> CliRunner:
     return CliRunner()
 
 
-@pytest.fixture
-def mock_poetry_installed(monkeypatch):
-    def mock_run(*args, **kwargs):
+@pytest.fixture  # type: ignore
+def mock_poetry_installed(monkeypatch: MonkeyPatch) -> None:
+    def mock_run(*args, **kwargs):  # type: ignore
         if args[0][:2] == ["poetry", "--version"]:
             return subprocess.CompletedProcess(args, 0, stdout="Poetry 1.1.0\n")
         return subprocess.run(*args, **kwargs)
@@ -23,7 +25,7 @@ def mock_poetry_installed(monkeypatch):
     monkeypatch.setattr(subprocess, "run", mock_run)
 
 
-def test_validate_project_name():
+def test_validate_project_name() -> None:
     from pyproject_creator.cli import validate_project_name
 
     assert validate_project_name("valid_project_name") == "valid_project_name"
@@ -46,7 +48,7 @@ def test_validate_project_name():
         validate_project_name("invalid_project_name_")
 
 
-def test_check_poetry_installed(mocker):
+def test_check_poetry_installed(mocker):  # type: ignore
     mock_run = mocker.patch("subprocess.run")
 
     # Test Poetry installed
@@ -64,7 +66,7 @@ def test_check_poetry_installed(mocker):
         check_poetry_installed()
 
 
-def test_run_command(mocker):
+def test_run_command(mocker):  # type: ignore
     mock_run = mocker.patch("subprocess.run")
     command = "echo test"
 
@@ -85,7 +87,7 @@ def test_run_command(mocker):
         run_command(command)
 
 
-def test_create_project(runner, mock_poetry_installed, monkeypatch, rootdir, project_names):
+def test_create_project(runner, mock_poetry_installed, monkeypatch, rootdir, project_names):  # type: ignore
     os.chdir(rootdir)
     project_name = project_names[0]
     project_path = rootdir / project_name
@@ -145,7 +147,9 @@ def test_create_project(runner, mock_poetry_installed, monkeypatch, rootdir, pro
         assert "def test_sample()" in content
 
 
-def test_create_project_without_tests_logs(runner, mock_poetry_installed, monkeypatch, rootdir, project_names):
+def test_create_project_without_tests_logs(  # type: ignore
+    runner, mock_poetry_installed, monkeypatch, rootdir: Path, project_names: list[str]
+):
     os.chdir(rootdir)
     project_name = project_names[1]
     project_path = rootdir / project_name
