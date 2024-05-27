@@ -1,26 +1,42 @@
 # Pyproject Creator
 
-Pyproject Creator 是一个旨在简化创建 Python 项目过程的工具。它设置了一个包含必要组件的项目结构，如 Poetry 用于包管理、pre-commit 用于代码格式化和 linting、日志包、使用 pytest 的测试，并且可选地，GitHub Action 工作流。
+Pyproject Creator 是一个旨在简化创建 Python 项目过程的工具。它可以生成一些基础项目结构组件。
+
+基础组件：
+- Poetry 用于包管理
+- pre-commit 用于代码格式化和 linting
+- Commitizen 用于规范 git commit
+
+可选组件
+- 日志
+- 使用 pytest 的测试
+- GitHub Action 工作流等
 
 ## 安装
 
-要使用 Pyproject Creator，请确保您的系统上已安装了 Python。然后，按照以下步骤操作：
+### 依赖项
+
+项目依赖于以下库：
+- **python 3.11+**: https://www.python.org/downloads/
+- **poetry 1.8.3**+: https://python-poetry.org/docs/
+
+### 源码安装
+
+按照以下步骤进行源码安装：
 
 1. **克隆仓库**：将 Pyproject Creator 仓库克隆到您的本地计算机。
+   ```bash
+   git clone https://github.com/atiasn/pyproject-creator.git
+   cd pyproject-creator
+   ```
 
 2. **安装依赖项**：导航到仓库目录并运行以下命令以安装依赖项：
 
     ```bash
-    poetry install
+    poetry install --only main
     ```
 
-3. **设置环境**：激活 Poetry 创建的虚拟环境：
-
-    ```bash
-    poetry shell
-    ```
-
-4. **运行工具**：执行以下命令运行 Pyproject Creator：
+3. **运行工具**：执行以下命令运行 Pyproject Creator：
 
     ```bash
     pypct
@@ -47,13 +63,6 @@ Pyproject Creator 是一个旨在简化创建 Python 项目过程的工具。它
 - **创建 GitHub Action**：选择是否为您的项目的主分支创建 GitHub Action 工作流。
 
 提供必要的详细信息后，Pyproject Creator 将设置您的项目结构并配置必要的文件。按照屏幕上的说明完成流程。
-
-## 依赖项
-
-Pyproject Creator 依赖于以下库：
-
-- **Poetry**：用于 Python 包管理。
-- **Jinja2**：用于模板渲染。
 
 ## 贡献
 
