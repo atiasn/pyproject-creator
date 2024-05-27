@@ -76,9 +76,8 @@ jobs:
           ls -la dist
 
       - name: Publish to PyPI
-        env:
-          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
         run: |
+          poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
           poetry publish
 
       - name: Create Release
