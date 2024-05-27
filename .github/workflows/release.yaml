@@ -13,34 +13,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Get tag
-      id: tag
-      run: |
-        echo tag=${GITHUB_REF#refs/tags/} >> $GITHUB_OUTPUT
+      - uses: actions/checkout@v4
+      - name: Get tag
+        id: tag
+        run: |
+          echo tag=${GITHUB_REF#refs/tags/} >> $GITHUB_OUTPUT
 
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
-      with:
-        python-version: "3.11"
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
-    - name: Install and set up Poetry
-      run: |
-        curl -sL https://install.python-poetry.org | python - -y
+      - name: Install and set up Poetry
+        run: |
+          curl -sL https://install.python-poetry.org | python - -y
 
-    - name: Update PATH
-      shell: bash
-      run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - name: Update PATH
+        shell: bash
+        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-    - name: Build distributions
-      run: |
-        poetry build -vvv
+      - name: Build distributions
+        run: |
+          poetry build -vvv
 
-    - name: Upload distribution artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: project-dist
-        path: dist
+      - name: Upload distribution artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: project-dist
+          path: dist
 
   Publish:
     needs: [Build]

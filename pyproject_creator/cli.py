@@ -87,7 +87,7 @@ def prompt_project_details() -> tuple[Path, Path]:
     exit(1)
 
 
-@click.command()
+@click.command()  # type: ignore
 def create_project() -> None:
     """Create a new Python project with Poetry, pre-commit, logs, tests."""
 

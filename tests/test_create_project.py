@@ -4,18 +4,19 @@ import subprocess
 import click
 import pytest
 from click.testing import CliRunner
+from _pytest.monkeypatch import MonkeyPatch
 
 from pyproject_creator.cli import run_command, create_project, check_poetry_installed
 
 
 @pytest.fixture
-def runner():
+def runner() -> CliRunner:
     return CliRunner()
 
 
 @pytest.fixture
-def mock_poetry_installed(monkeypatch):
-    def mock_run(*args, **kwargs):
+def mock_poetry_installed(monkeypatch: MonkeyPatch) -> None:
+    def mock_run(*args, **kwargs) -> subprocess.CompletedProcess[str] | None:
         if args[0][:2] == ["poetry", "--version"]:
             return subprocess.CompletedProcess(args, 0, stdout="Poetry 1.1.0\n")
         return subprocess.run(*args, **kwargs)
@@ -23,7 +24,7 @@ def mock_poetry_installed(monkeypatch):
     monkeypatch.setattr(subprocess, "run", mock_run)
 
 
-def test_validate_project_name():
+def test_validate_project_name() -> None:
     from pyproject_creator.cli import validate_project_name
 
     assert validate_project_name("valid_project_name") == "valid_project_name"

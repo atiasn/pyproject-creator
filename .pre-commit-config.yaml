@@ -37,10 +37,12 @@ repos:
         language: python
         stages: [commit]
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: 1.10.0
+    rev: v1.10.0
     hooks:
       - id: mypy
         args: [--strict, --ignore-missing-imports]
+        language: python
+        stages: [commit]
   - repo: https://github.com/pycqa/isort
     rev: 5.13.2
     hooks:

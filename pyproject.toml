@@ -25,6 +25,7 @@ pre-commit-hooks = "^4.6.0"
 pre-commit = "^3.7.1"
 commitizen = "^3.27.0"
 pytest-mock = "^3.14.0"
+loguru = "^0.7.2"
 
 [tool.poetry.scripts]
 pypct = "pyproject_creator.cli:create_project"
@@ -37,8 +38,9 @@ extend-exclude = '''
 '''
 
 [tool.mypy]
+python_version = 3.11
 strict = true
-files = ["pyproject_creator", "scripts", "tests"]
+files = ["pyproject_creator", "scripts"]
 pretty = true
 
 [tool.isort]

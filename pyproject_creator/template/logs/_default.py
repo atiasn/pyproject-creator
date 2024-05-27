@@ -10,6 +10,7 @@ import re
 import sys
 import inspect
 import logging
+from re import Match
 from typing import TYPE_CHECKING
 
 import loguru
@@ -33,9 +34,9 @@ PROJECT_NAME = "<set project name>"
 class LoguruHandler(logging.Handler):  # pragma: no cover
     """logging 与 loguru 之间的桥梁，将 logging 的日志转发到 loguru。"""
 
-    def emit(self, record: logging.LogRecord):
+    def emit(self, record: logging.LogRecord) -> None:
         try:
-            level = logger.level(record.levelname).name
+            level: int | str = logger.level(record.levelname).name
         except ValueError:
             level = record.levelno
 
@@ -47,9 +48,9 @@ class LoguruHandler(logging.Handler):  # pragma: no cover
         logger.opt(depth=depth, exception=record.exc_info).log(level, record.getMessage())
 
 
-def desensitize_cookie_values(cookie):
+def desensitize_cookie_values(cookie: str) -> str:
     # 匹配 key=value 对，考虑结尾可能没有分号的情况
-    def replacer(match):
+    def replacer(match: Match[str]) -> str:
         key = match.group(1)
         value = match.group(2)
         if len(value) > 6:
@@ -62,23 +63,23 @@ def desensitize_cookie_values(cookie):
     return re.sub(r"(\w+)=([^;]+)", replacer, cookie)
 
 
-def desensitize_cookie_data(message):
+def desensitize_cookie_data(message: str) -> str:
     # 用于匹配整个 'Cookie: ...' 头部，并只对该部分进行脱敏
     pattern = r"'Cookie': '([^']+)'"
 
-    def header_replacer(match):
+    def header_replacer(match: Match[str]) -> str:
         cookie = match.group(1)
         return f"'Cookie': '{desensitize_cookie_values(cookie)}'"
 
     return re.sub(pattern, header_replacer, message)
 
 
-def default_filter(record: "Record"):
+def default_filter(record: Record) -> bool:
     log_level = LOG_LEVEL
     levelno = logger.level(log_level).no if isinstance(log_level, str) else log_level
     if LOG_SENSITIZE:
         record["message"] = desensitize_cookie_data(record["message"])
-    return record["level"].no >= levelno
+    return int(record["level"].no) >= int(levelno)
 
 
 logger.remove()
@@ -97,7 +98,7 @@ if LOG_LEVEL == "DEBUG":
 else:
     diagnose = False
     backtrace = False
-    default_format: str = (
+    default_format = (
         "<g>{time:MM-DD HH:mm:ss}</g> " "[<lvl>{level}</lvl>] " f"<c><u>{PROJECT_NAME}</u></c> | " "{message}"
     )
     """默认日志格式"""

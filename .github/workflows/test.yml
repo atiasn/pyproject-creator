@@ -40,10 +40,13 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: poetry
 
+      - name: Run pre-commit
+        uses: pre-commit/action@v3.0.1
+
       - name: Install dependencies
         run: poetry install
 
-      - name: Run typechecking
+      - name: Run typechecking - mypy
         run: poetry run mypy
 
       - name: Run tests
