@@ -17,40 +17,30 @@ repos:
         exclude: poetry.lock|.*template/pyproject.template$
       - id: check-yaml
       - id: pretty-format-json
-        args:
-          - --autofix
-          - --indent
-          - "4"
+        args: [--autofix, --indent, "4"]
       - id: check-symlinks
       - id: end-of-file-fixer
       - id: name-tests-test
-        args:
-          - --pytest-test-first
+        args: [--pytest-test-first]
       - id: trailing-whitespace
 
   - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
     rev: v2.12.0
     hooks:
       - id: pretty-format-yaml
-        args:
-          - --autofix
-          - --indent
-          - "2"
-          - --offset
-          - "2"
-          - --preserve-quotes
+        args: [--autofix, --indent, "2", --offset, "2", --preserve-quotes]
         language: python
         stages: [commit]
       - id: pretty-format-toml
-        args:
-          - --autofix
-          - --no-sort
-          - --indent
-          - "4"
+        args: [--autofix, --no-sort, --indent, "4"]
         exclude: poetry.lock|.*template/pyproject.template$
         language: python
         stages: [commit]
-
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: 1.10.0
+    hooks:
+      - id: mypy
+        args: [--strict, --ignore-missing-imports]
   - repo: https://github.com/pycqa/isort
     rev: 5.13.2
     hooks:
@@ -69,11 +59,7 @@ repos:
     rev: v0.4.5
     hooks:
       - id: ruff
-        args:
-          - --fix
-          - --exit-non-zero-on-fix
-          - --ignore
-          - PT004
+        args: [--fix, --exit-non-zero-on-fix, --ignore, PT004]
         language: python
         stages: [commit]
       - id: ruff-format
