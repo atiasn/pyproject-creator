@@ -40,6 +40,9 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: poetry
 
+      - name: Set environment variable
+        run: echo "PYTHONUTF8=1" >> $GITHUB_ENV
+
       - name: Install dependencies
         run: poetry install
 
