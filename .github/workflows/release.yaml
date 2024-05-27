@@ -5,7 +5,7 @@ on:
     tags:
       - '*.*.*'
     branches:
-      - master
+      - dev
 
 jobs:
 
@@ -75,6 +75,8 @@ jobs:
           ls -la dist
 
       - name: Publish to PyPI
+        env:
+          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
         run: |
           poetry publish
 
