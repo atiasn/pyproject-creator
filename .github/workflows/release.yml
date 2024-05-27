@@ -45,6 +45,9 @@ jobs:
   Publish:
     needs: [Build]
     runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/pyproject-creator/
     permissions:
       contents: write
       id-token: write
@@ -76,8 +79,9 @@ jobs:
           ls -la dist
 
       - name: Publish to PyPI
+        env:
+          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
         run: |
-          poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
           poetry publish
 
       - name: Create Release
