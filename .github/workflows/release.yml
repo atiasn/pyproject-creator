@@ -3,9 +3,7 @@ name: Release
 on:
   push:
     tags:
-      - '*.*.*'
-    branches:
-      - master
+      - '^v*.*.*'
 
 jobs:
 
@@ -45,8 +43,12 @@ jobs:
   Publish:
     needs: [Build]
     runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/pyproject-creator/
     permissions:
       contents: write
+      id-token: write
 
     steps:
       - name: Checkout code
@@ -75,6 +77,8 @@ jobs:
           ls -la dist
 
       - name: Publish to PyPI
+        env:
+          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
         run: |
           poetry publish
 

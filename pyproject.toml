@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyproject-creator"
-version = "0.1.0"
+version = "0.1.2"
 description = "A tool to create Python project templates"
 authors = ["NextKele <ritboylei@gmail.com>"]
 license = "MIT"
@@ -18,7 +18,7 @@ priority = "primary"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.2.1"
-mypy = "^1.5"
+mypy = "^1.10.0"
 isort = "^5.13.2"
 black = "^24.4.2"
 pre-commit-hooks = "^4.6.0"
@@ -80,10 +80,6 @@ ignore = [
     "T201",  # print found
     "PT004"  # not return anything
 ]
-
-[tool.ruff.lint.isort]
-lines-after-imports = 2
-required-imports = ["from __future__ import annotations"]
 
 [tool.ruff.lint.flake8-quotes]
 inline-quotes = "double"

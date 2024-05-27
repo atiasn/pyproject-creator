@@ -41,6 +41,14 @@ repos:
         exclude: poetry.lock|.*template/pyproject.template$
         stages: [commit]
 
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.4.5
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+        stages: [commit]
+      - id: ruff-format
+
   - repo: https://github.com/pycqa/isort
     rev: 5.13.2
     hooks:
@@ -52,14 +60,6 @@ repos:
     hooks:
       - id: black
         stages: [commit]
-
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.4.5
-    hooks:
-      - id: ruff
-        args: [--fix, --exit-non-zero-on-fix, --ignore, PT004]
-        stages: [commit]
-      - id: ruff-format
 
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.10.0
