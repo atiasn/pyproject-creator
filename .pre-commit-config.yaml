@@ -1,6 +1,4 @@
 default_install_hook_types: [pre-commit, prepare-commit-msg, commit-msg]
-default_language_version:
-  python: python3.11
 ci:
   autofix_commit_msg: ":rotating_light: auto fix by pre-commit hooks"
   autofix_prs: true
