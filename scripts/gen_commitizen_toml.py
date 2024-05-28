@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import jinja2
 
 commit_types: list[dict[str, str]] = [

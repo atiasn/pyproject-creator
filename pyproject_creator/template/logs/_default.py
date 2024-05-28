@@ -6,6 +6,8 @@
 - 输出: 输出至 stdout
 """
 
+from __future__ import annotations
+
 import re
 import sys
 import inspect
