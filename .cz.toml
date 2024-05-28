@@ -4,7 +4,7 @@ tag_format = "$version"
 version_scheme = "pep440"
 version_provider = "poetry"
 update_changelog_on_bump = true
-major_version_zero = true
+major_version_zero = false
 version_files = ["pyproject.toml:^version"]
 bump_message = "🔖 release: $current_version → $new_version"
 
@@ -22,6 +22,8 @@ This is a customized Commitizen configuration for our project.
 Commit Types:
 - ✨ feat: Introduce new features.
 - 🐛 fix: Fix a bug.
+- 💚 ci_fix: Fix CI Build.
+- 👷 ci_update: Add or update CI build system.
 - 🚑️ hotfix: Hotfix a bug.
 - 📝 docs: Add or update documentation.
 - 🎨 style: Improve structure/format of the code.
@@ -37,8 +39,6 @@ Commit Types:
 - ⬇️ downgrade: Downgrade dependencies.
 - ⬆️ upgrade: Upgrade dependencies.
 - 📌 pin: Pin dependencies to specific versions.
-- 💚 ci_fix: Fix CI Build.
-- 👷 ci_update: Add or update CI build system.
 - 📈 analytics: Add or update analytics or track code.
 - 🔧 config: Add or update configuration files.
 - 🔨 scripts: Add or update development scripts.
