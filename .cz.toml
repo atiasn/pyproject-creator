@@ -1,12 +1,12 @@
 [tool.commitizen]
 name = "cz_customize"
-tag_format = "$version"
+tag_format = "v$version"
 version_scheme = "pep440"
 version_provider = "poetry"
 update_changelog_on_bump = true
-major_version_zero = false
+major_version_zero = true
 version_files = ["pyproject.toml:^version"]
-bump_message = "🔖 release: $current_version → $new_version"
+bump_message = "🔖 release: v$current_version → v$new_version"
 
 [tool.commitizen.customize]
 message_template = "{{change_type}}: {{message}}"
