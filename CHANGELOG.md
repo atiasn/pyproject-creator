@@ -1,3 +1,9 @@
+## v0.1.2 (2024-05-28)
+
+### Feat
+
+- change version format
+
 ## 0.1.2 (2024-05-28)
 
 ### release
