@@ -167,3 +167,6 @@ a-test-*
 a_pytest_*
 a-pytest-*
 Y
+
+# scripts
+scripts/.cz.toml

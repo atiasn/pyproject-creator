@@ -1,0 +1,46 @@
+[tool.commitizen]
+name = "cz_customize"
+tag_format = "v$version"
+version_scheme = "pep440"
+version_provider = "poetry"
+update_changelog_on_bump = true
+major_version_zero = true
+version_files = ["pyproject.toml:^version"]
+bump_message = "{{ release_type_str }}: v$current_version → v$new_version"
+
+[tool.commitizen.customize]
+message_template = "{{ '{{change_type}}' }}: {{ '{{message}}' }}"
+example = "{{ feat_type_str }}: this feature enables customization through config file"
+schema = "<change_type>: <message>"
+schema_pattern = "^(?P<emoji>[^\\s]+)\\s(?P<change_type>{{ schema_pattern_type_str }}):\\s(?P<message>.+)"
+bump_pattern = "^\\S.*({{ bump_pattern_type_str }})"
+bump_map = {"breaking" = "MAJOR", "feat" = "MINOR", "fix" = "PATCH", "hotfix" = "PATCH"}
+change_type_order = ["BREAKING CHANGE", "feat", "fix", "hotfix", "perf", "refactor", "docs", "style", "test", "build", "ci", "chore", "revert", "release", "wip"]
+commit_parser = "^(?P<emoji>[^\\s]+)\\s(?P<change_type>{{ commit_parser_type_str }}):\\s(?P<message>.+)$"
+changelog_pattern = "^\\S.*({{ changelog_pattern_type_str }})?(!)?"
+change_type_map = {"feat" = "Feat", "fix" = "Fix", "hotfix" = "Hotfix"}
+info = """
+This is a customized Commitizen configuration for our project.
+
+Commit Types:
+{{ info_commit_types_str }}
+
+Each commit message should follow this format:
+<change_type>: <message>
+
+Example:
+{{ feat_type_str }}: Add new authentication module
+"""
+
+[[tool.commitizen.customize.questions]]
+type = "list"
+name = "change_type"
+choices = [
+    {{ change_type_choices_str }}
+]
+message = "Select the type of change you are committing"
+
+[[tool.commitizen.customize.questions]]
+type = "input"
+name = "message"
+message = "Please input commit message body:\n"
