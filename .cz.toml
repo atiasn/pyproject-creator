@@ -15,7 +15,7 @@ schema = "<change_type>: <message>"
 schema_pattern = "^(?P<emoji>[^\\s]+)\\s(?P<change_type>feat|fix|docs|style|hotfix|refactor|test|deploy|ui|release|types|lint|add_dep|rm_dep|downgrade|upgrade|pin|ci_fix|ci_update|analytics|config|scripts|i18n|typos|init|wip|revert|merge|compiled|api|move|breaking|accessibility|comments|drunk|logs|rm_logs|ux|architecture|gitignore|flags|catch_errors|deprecate|rm_dead_code|dev_exp|performance|rm_code|assets):\\s(?P<message>.+)"
 bump_pattern = "^(breaking|feat|fix|hotfix)"
 bump_map = {"breaking" = "MAJOR", "feat" = "MINOR", "fix" = "PATCH", "hotfix" = "PATCH"}
-change_type_order = ["BREAKING CHANGE", "feat", "fix", "perf", "refactor", "docs", "style", "test", "build", "ci", "chore", "revert", "release", "wip"]
+change_type_order = ["BREAKING CHANGE", "feat", "fix", "hotfix", "perf", "refactor", "docs", "style", "test", "build", "ci", "chore", "revert", "release", "wip"]
 info = """
 This is a customized Commitizen configuration for our project.
 
@@ -77,7 +77,7 @@ Example:
 """
 commit_parser = "^(?P<emoji>[^\\s]+)\\s(?P<change_type>feat|fix|docs|style|hotfix|refactor|test|deploy|ui|release|types|lint|add_dep|rm_dep|downgrade|upgrade|pin|ci_fix|ci_update|analytics|config|scripts|i18n|typos|init|wip|revert|merge|compiled|api|move|breaking|accessibility|comments|drunk|logs|rm_logs|ux|architecture|gitignore|flags|catch_errors|deprecate|rm_dead_code|dev_exp|performance|rm_code|assets):\\s(?P<message>.+)$"
 changelog_pattern = "^(feat|fix|hotfix|docs|style|refactor|test|deploy|ui|release|types|lint|add_dep|rm_dep|downgrade|upgrade|pin|ci_fix|ci_update|analytics|config|scripts|i18n|typos|init|wip|revert|merge|compiled|api|move|breaking|accessibility|comments|drunk|logs|rm_logs|ux|architecture|gitignore|flags|catch_errors|deprecate|rm_dead_code|dev_exp|performance|rm_code|assets)?(!)?"
-change_type_map = {"feat" = "Feat", "fix" = "Fix"}
+change_type_map = {"feat" = "Feat", "fix" = "Fix", "hotfix" = "Hotfix"}
 
 [[tool.commitizen.customize.questions]]
 type = "list"
