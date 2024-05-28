@@ -116,6 +116,7 @@ def create_project() -> None:
         project_path / ".pre-commit-config.yaml",
     )
     shutil.copy(template_path / ".cz.toml", project_path / ".cz.toml")
+    shutil.copytree(template_path / "scripts", project_path / "scripts")
     if need_logs.lower() == "y":
         shutil.copytree(template_path / "logs", project_path / src_path / "logs")
     if need_tests.lower() == "y":
