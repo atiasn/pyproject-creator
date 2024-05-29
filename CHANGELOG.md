@@ -1,5 +1,11 @@
 ## v0.3.0 (2024-05-29)
 
+### Fix
+
+- update ci tag (#11)
+
+## v0.2.0 (2024-05-29)
+
 ### Docs
 
 - delete changelog
@@ -7,10 +13,6 @@
 ### Feat
 
 - generate .cz.toml file using script (#8)
-
-### Fix
-
-- update ci tag (#11)
 
 ### Hotfix
 
@@ -26,7 +28,7 @@
 ### Feat
 
 - template add github action option (#3)
-- add github actio
+- add github action
 
 ### Hotfix
 
