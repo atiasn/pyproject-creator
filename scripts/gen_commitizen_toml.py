@@ -18,8 +18,14 @@ def get_info_via_type(_type: str) -> str:
     raise KeyError(f"{_type} not found in {commit_types}")
 
 
-def get_type_pattern(*args: str) -> str:
-    change_types = [i for i in commit_types if not args or i["change_type"] in args]
+def get_type_pattern(*args: str, exclude: list[str] | None = None) -> str:
+    if exclude is None:
+        exclude = []
+    change_types = [
+        i
+        for i in commit_types
+        if (not args or i["change_type"] in args) and (i["change_type"] not in exclude)
+    ]
     return "|".join(i["change_type"] for i in change_types)
 
 
@@ -58,7 +64,7 @@ def main() -> None:
         feat_type_str=get_info_via_type("feat"),
         schema_pattern_type_str=get_type_pattern(),
         bump_pattern_type_str=get_type_pattern(*["breaking", "feat", "fix", "hotfix"]),
-        commit_parser_type_str=get_type_pattern(),
+        commit_parser_type_str=get_type_pattern(exclude=["release"]),
         changelog_pattern_type_str=get_type_pattern(*pattern_type_list),
         change_type_map_str=get_change_type_map_str(*pattern_type_list),
         info_commit_types_str="\n".join(

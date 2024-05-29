@@ -170,3 +170,6 @@ Y
 
 # scripts
 scripts/.cz.toml
+
+# commitizen
+body.md
