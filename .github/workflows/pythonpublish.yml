@@ -1,11 +1,9 @@
-name: Upload Python Package
+name: PyPi
 
 on:
   push:
     tags:
       - 'v*.*.*'
-    branches:
-      - dev
 
 jobs:
   deploy:

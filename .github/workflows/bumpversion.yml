@@ -3,7 +3,7 @@ name: Bump and Release
 on:
   push:
     branches:
-      - dev
+      - master
 
 jobs:
   bump-version:
@@ -28,6 +28,7 @@ jobs:
       - name: Delete bump commit message
         run: |
           sed -i '/🔖 release:/,$d' body.md
+          cat body.md
 
       - name: Get tag
         id: tag

@@ -1,5 +1,8 @@
 # Pyproject Creator
-![test](https://github.com/atiasn/docs/actions/workflows/test.yml/badge.svg?branch=master)
+![test](https://github.com/atiasn/pyproject-creator/actions/workflows/test.yml/badge.svg?branch=master)
+![pypi](https://github.com/atiasn/pyproject-creator/actions/workflows/pythonpublish.yml/badge.svg?branch=master)
+[![Poetry](https://img.shields.io/endpoint?url=https://python-poetry.org/badge/v0.json)](https://python-poetry.org/)
+
 Pyproject Creator 是一个旨在简化创建 Python 项目过程的工具。它可以生成一些基础项目结构组件。
 
 基础组件：

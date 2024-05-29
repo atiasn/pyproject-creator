@@ -13,6 +13,7 @@ def publish_package() -> None:
         else:
             print("\nThe version already exists, so there's no need to publish it again.")
             subprocess.run(["poetry", "version"])
+    print("\n", result.stdout)
 
 
 if __name__ == "__main__":
