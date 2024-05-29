@@ -51,6 +51,7 @@ def main() -> None:
         "refactor",
         "config",
         "scripts",
+        "style",
     ]
     template = template.render(
         release_type_str=get_info_via_type("release"),
@@ -58,7 +59,7 @@ def main() -> None:
         schema_pattern_type_str=get_type_pattern(),
         bump_pattern_type_str=get_type_pattern(*["breaking", "feat", "fix", "hotfix"]),
         commit_parser_type_str=get_type_pattern(),
-        changelog_pattern_type_str=get_type_pattern(),
+        changelog_pattern_type_str=get_type_pattern(*pattern_type_list),
         change_type_map_str=get_change_type_map_str(*pattern_type_list),
         info_commit_types_str="\n".join(
             f"- {commit['emoji']} {commit['change_type']}: {commit['description']}"

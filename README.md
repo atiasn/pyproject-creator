@@ -1,5 +1,5 @@
 # Pyproject Creator
-
+![test](https://github.com/atiasn/docs/actions/workflows/test.yml/badge.svg?branch=master)
 Pyproject Creator 是一个旨在简化创建 Python 项目过程的工具。它可以生成一些基础项目结构组件。
 
 基础组件：

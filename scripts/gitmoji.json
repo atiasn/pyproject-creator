@@ -50,6 +50,11 @@
         "description": "Add, update, or pass tests."
     },
     {
+        "emoji": "🔖",
+        "change_type": "release",
+        "description": "Release / Version tags."
+    },
+    {
         "emoji": "🚀",
         "change_type": "deploy",
         "description": "Deploy stuff."
@@ -78,11 +83,6 @@
         "emoji": "💄",
         "change_type": "ui",
         "description": "Add or update the UI and style files."
-    },
-    {
-        "emoji": "🔖",
-        "change_type": "release",
-        "description": "Release / Version tags."
     },
     {
         "emoji": "🏷️",
