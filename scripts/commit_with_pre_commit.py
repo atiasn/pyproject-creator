@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import subprocess
 
 
@@ -6,6 +8,7 @@ def run_pre_commit() -> int:
     result = subprocess.run(
         ["pre-commit", "run", "--all-files", "-vvv"], capture_output=True, text=True
     )
+    print(result.stdout)
     return result.returncode
 
 

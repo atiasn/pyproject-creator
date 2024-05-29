@@ -6,6 +6,8 @@
 - 输出: 输出至 stdout
 """
 
+from __future__ import annotations
+
 import re
 import sys
 import inspect
@@ -14,6 +16,7 @@ from re import Match
 from typing import TYPE_CHECKING
 
 import loguru
+
 
 if TYPE_CHECKING:
     from loguru import Logger, Record
