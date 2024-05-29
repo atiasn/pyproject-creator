@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyproject-creator"
-version = "0.2.0"
+version = "0.3.0"
 description = "A tool to create Python project templates"
 authors = ["NextKele <ritboylei@gmail.com>"]
 license = "MIT"
