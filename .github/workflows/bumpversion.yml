@@ -24,11 +24,6 @@ jobs:
         run: |
           echo "PUSH_FLAG=$(if [ '${{ github.ref }}' == 'refs/heads/master' ]; then echo 'true'; else echo 'false'; fi)" >> $GITHUB_ENV
 
-      - name: Set push flag
-        id: set_push_flag
-        run: |
-          echo "PUSH_FLAG=$(if [ '${{ github.ref }}' == 'refs/heads/master' ]; then echo 'true'; else echo 'false'; fi)" >> $GITHUB_ENV
-
       - name: Create bump and changelog
         uses: commitizen-tools/commitizen-action@master
         with:
