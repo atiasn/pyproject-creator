@@ -25,10 +25,19 @@ jobs:
           github_token: ${{ github.token }}
           changelog_increment_filename: body.md
 
+      - name: Delete bump commit message
+        run: |
+          sed -i '/🔖 release:/,$d' body.md
+
+      - name: Get tag
+        id: tag
+        run: |
+          echo tag=${GITHUB_REF#refs/tags/} >> $GITHUB_OUTPUT
+
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
           body_path: "body.md"
-          tag_name: ${{ env.REVISION }}
+          tag_name: ${{ steps.tag.outputs.tag }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
