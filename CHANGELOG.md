@@ -1,35 +1,3 @@
-## v0.2.0 (2024-05-29)
-
-### Docs
-
-- update changelog
-- update changelog
-
-### Feat
-
-- generate .cz.toml file using script
-
-### Hotfix
-
-- get project tag
-- delete bump commit message
-- update body.md
-- create bump version
-- update workflows release tag format
-
-### Scripts
-
-- Generate a .cz.toml file using a script
-
-### Style
-
-- update format rules
-
-### ci_update
-
-- get project tag
-- update permission
-
 ## v0.1.2 (2024-05-28)
 
 ### Feat
