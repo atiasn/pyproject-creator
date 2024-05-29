@@ -26,10 +26,10 @@ pre-commit = "^3.7.1"
 commitizen = "^3.27.0"
 pytest-mock = "^3.14.0"
 loguru = "^0.7.2"
-tomlkit = "^0.12.5"
 
 [tool.poetry.scripts]
 pypct = "pyproject_creator.cli:create_project"
+gen-cz-config = "scripts.gen_commitizen_toml:main"
 
 [tool.black]
 line-length = 99
@@ -55,6 +55,7 @@ multi_line_output = 3
 add_imports = ["from __future__ import annotations"]
 color_output = true
 length_sort_straight = true
+lines_after_imports = 2
 extend_skip = [".md", ".json", ".yml", ".yaml", ".toml", ".dockerignore", ".gitignore", ".template"]
 
 [tool.ruff]

@@ -1,21 +1,21 @@
 [tool.commitizen]
+bump_message = "🔖 release: $current_version → $new_version"
+major_version_zero = true
 name = "cz_customize"
 tag_format = "$version"
-version_scheme = "pep440"
-version_provider = "poetry"
 update_changelog_on_bump = true
-major_version_zero = true
 version_files = ["pyproject.toml:^version"]
-bump_message = "🔖 release: $current_version → $new_version"
+version_provider = "poetry"
+version_scheme = "pep440"
 
 [tool.commitizen.customize]
-message_template = "{{change_type}}: {{message}}"
-example = "✨ feat: this feature enables customization through config file"
-schema = "<change_type>: <message>"
-schema_pattern = "^(?P<emoji>[^\\s]+)\\s(?P<change_type>feat|fix|docs|style|refactor|test|deploy|ui|release|types|lint|add_dep|rm_dep|downgrade|upgrade|pin|ci_fix|ci_update|analytics|config|scripts|i18n|typos|init|wip|revert|merge|compiled|api|move|breaking|accessibility|comments|drunk|logs|rm_logs|ux|architecture|gitignore|flags|catch_errors|deprecate|rm_dead_code|dev_exp|performance|rm_code|assets):\\s(?P<message>.+)"
-bump_pattern = "^(breaking|feat|fix|hotfix)"
 bump_map = {"breaking" = "MAJOR", "feat" = "MINOR", "fix" = "PATCH", "hotfix" = "PATCH"}
+bump_pattern = "^(breaking|feat|fix|hotfix)"
+change_type_map = {"feat" = "Feat", "fix" = "Fix"}
 change_type_order = ["BREAKING CHANGE", "feat", "fix", "perf", "refactor", "docs", "style", "test", "build", "ci", "chore", "revert", "release", "wip"]
+changelog_pattern = "^(feat|fix|docs|style|refactor|test|deploy|ui|release|types|lint|add_dep|rm_dep|downgrade|upgrade|pin|ci_fix|ci_update|analytics|config|scripts|i18n|typos|init|wip|revert|merge|compiled|api|move|breaking|accessibility|comments|drunk|logs|rm_logs|ux|architecture|gitignore|flags|catch_errors|deprecate|rm_dead_code|dev_exp|performance|rm_code|assets)?(!)?"
+commit_parser = "^(?P<emoji>[^\\s]+)\\s(?P<change_type>feat|fix|docs|style|refactor|test|deploy|ui|release|types|lint|add_dep|rm_dep|downgrade|upgrade|pin|ci_fix|ci_update|analytics|config|scripts|i18n|typos|init|wip|revert|merge|compiled|api|move|breaking|accessibility|comments|drunk|logs|rm_logs|ux|architecture|gitignore|flags|catch_errors|deprecate|rm_dead_code|dev_exp|performance|rm_code|assets):\\s(?P<message>.+)$"
+example = "✨ feat: this feature enables customization through config file"
 info = """
 This is a customized Commitizen configuration for our project.
 
@@ -74,13 +74,11 @@ Each commit message should follow this format:
 Example:
 ✨ feat: Add new authentication module
 """
-commit_parser = "^(?P<emoji>[^\\s]+)\\s(?P<change_type>feat|fix|docs|style|refactor|test|deploy|ui|release|types|lint|add_dep|rm_dep|downgrade|upgrade|pin|ci_fix|ci_update|analytics|config|scripts|i18n|typos|init|wip|revert|merge|compiled|api|move|breaking|accessibility|comments|drunk|logs|rm_logs|ux|architecture|gitignore|flags|catch_errors|deprecate|rm_dead_code|dev_exp|performance|rm_code|assets):\\s(?P<message>.+)$"
-changelog_pattern = "^(feat|fix|docs|style|refactor|test|deploy|ui|release|types|lint|add_dep|rm_dep|downgrade|upgrade|pin|ci_fix|ci_update|analytics|config|scripts|i18n|typos|init|wip|revert|merge|compiled|api|move|breaking|accessibility|comments|drunk|logs|rm_logs|ux|architecture|gitignore|flags|catch_errors|deprecate|rm_dead_code|dev_exp|performance|rm_code|assets)?(!)?"
-change_type_map = {"feat" = "Feat", "fix" = "Fix"}
+message_template = "{{change_type}}: {{message}}"
+schema = "<change_type>: <message>"
+schema_pattern = "^(?P<emoji>[^\\s]+)\\s(?P<change_type>feat|fix|docs|style|refactor|test|deploy|ui|release|types|lint|add_dep|rm_dep|downgrade|upgrade|pin|ci_fix|ci_update|analytics|config|scripts|i18n|typos|init|wip|revert|merge|compiled|api|move|breaking|accessibility|comments|drunk|logs|rm_logs|ux|architecture|gitignore|flags|catch_errors|deprecate|rm_dead_code|dev_exp|performance|rm_code|assets):\\s(?P<message>.+)"
 
 [[tool.commitizen.customize.questions]]
-type = "list"
-name = "change_type"
 choices = [
     {value = "✨ feat", name = "✨ feat: Introduce new features."},
     {value = "🐛 fix", name = "🐛 fix: Fix a bug."},
@@ -132,8 +130,10 @@ choices = [
     {value = "🍱 assets", name = "🍱 assets: Add or update assets."}
 ]
 message = "Select the type of change you are committing"
+name = "change_type"
+type = "list"
 
 [[tool.commitizen.customize.questions]]
-type = "input"
-name = "message"
 message = "Please input commit message body:\n"
+name = "message"
+type = "input"

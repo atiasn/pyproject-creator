@@ -18,7 +18,7 @@ bump_map = {"breaking" = "MAJOR", "feat" = "MINOR", "fix" = "PATCH", "hotfix" = 
 change_type_order = ["BREAKING CHANGE", "feat", "fix", "hotfix", "perf", "refactor", "docs", "style", "test", "build", "ci", "chore", "revert", "release", "wip"]
 commit_parser = "^(?P<emoji>[^\\s]+)\\s(?P<change_type>{{ commit_parser_type_str }}):\\s(?P<message>.+)$"
 changelog_pattern = "^\\S.*({{ changelog_pattern_type_str }})?(!)?"
-change_type_map = {"feat" = "Feat", "fix" = "Fix", "hotfix" = "Hotfix"}
+change_type_map = {{ change_type_map_str }}
 info = """
 This is a customized Commitizen configuration for our project.
 

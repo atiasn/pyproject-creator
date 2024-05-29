@@ -9,6 +9,7 @@ from pathlib import Path
 import click
 import jinja2
 
+
 BASE_PATH: Path = Path(__file__).parent.resolve()
 
 
