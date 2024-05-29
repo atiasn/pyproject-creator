@@ -28,17 +28,18 @@ jobs:
       - name: Delete bump commit message
         run: |
           sed -i '/🔖 release:/,$d' body.md
-          cat body.md
 
       - name: Get tag
         id: tag
         run: |
-          echo tag=${GITHUB_REF#refs/tags/} >> $GITHUB_OUTPUT
+          LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1)
+          echo "Latest tag is $LATEST_TAG"
+          echo "tag=$LATEST_TAG" >> $GITHUB_OUTPUT
 
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
           body_path: "body.md"
-          tag_name: "v${{ env.REVISION  }}"
+          tag_name: ${{ steps.tag.outputs.tag }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
