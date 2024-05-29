@@ -1,3 +1,23 @@
+## v0.2.0 (2024-05-29)
+
+### Docs
+
+- update changelog
+
+### Feat
+
+- generate .cz.toml file using script (#8)
+
+### Fix
+
+- update tag
+
+### ci_update
+
+- test
+- update token
+- add push params
+
 ## v0.1.2 (2024-05-28)
 
 ### Feat
