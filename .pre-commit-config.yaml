@@ -23,11 +23,12 @@ repos:
         exclude: poetry.lock|.*template/pyproject.template$
       - id: check-yaml
       - id: pretty-format-json
-        args: [--autofix, --indent, "4"]
+        args: [--autofix, --indent, "4", --no-ensure-ascii, --no-sort-keys]
       - id: check-symlinks
       - id: end-of-file-fixer
       - id: name-tests-test
         args: [--pytest-test-first]
+      - id: sort-simple-yaml
       - id: trailing-whitespace
 
   - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
