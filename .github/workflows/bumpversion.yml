@@ -28,6 +28,7 @@ jobs:
       - name: Delete bump commit message
         run: |
           sed -i '/🔖 release:/,$d' body.md
+          cat body.md
 
       - name: Get tag
         id: tag
@@ -38,6 +39,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           body_path: "body.md"
-          tag_name: ${{ steps.tag.outputs.tag }}
+          tag_name: "v${{ env.REVISION  }}"
         env:
           GITHUB_TOKEN: ${{ github.token }}
