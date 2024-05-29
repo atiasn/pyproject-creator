@@ -1,9 +1,5 @@
 ## v0.2.0 (2024-05-29)
 
-### release
-
-- v0.1.1 → v0.1.2 (#6)
-
 ### Docs
 
 - update changelog
