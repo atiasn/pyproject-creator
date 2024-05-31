@@ -34,12 +34,6 @@ jobs:
           git_user_signingkey: true
           git_config_global: true
 
-      - name: Set User Signing Key
-        run: |
-          gpg --list-secret-keys --keyid-format=long
-        env:
-          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
-
       - name: Create bump and changelog
         uses: commitizen-tools/commitizen-action@master
         with:
@@ -48,7 +42,7 @@ jobs:
           git_name: atiasn
           git_email: ritboylei@gmail.com
           push: ${{ env.PUSH_FLAG }}
-          gpg_sign: true
+          gpg_sign: false
           merge: true
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
