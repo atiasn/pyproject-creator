@@ -1,6 +1,6 @@
 # Pyproject Creator
 ![test](https://github.com/atiasn/pyproject-creator/actions/workflows/test.yml/badge.svg?branch=master)
-![PyPI - Version](https://img.shields.io/pypi/v/pyproject-creator)
+[![PyPI - Version](https://img.shields.io/pypi/v/pyproject-creator)](https://pypi.org/project/pyproject-creator/)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pyproject-creator)
 [![Poetry](https://img.shields.io/endpoint?url=https://python-poetry.org/badge/v0.json)](https://python-poetry.org/)
 
