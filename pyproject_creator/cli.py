@@ -108,8 +108,9 @@ def create_project() -> None:
     need_logs: str = click.prompt("Create logs package? (Y/n)", default="Y", type=str)
     need_tests: str = click.prompt("Create tests(pytest) directory? (Y/n)", default="Y", type=str)
     github_action: str = click.prompt(
-        "Create github action for project(master branch)? (Y/n)", default="n", type=str
+        "Create github action for project(master branch)? (y/N)", default="n", type=str
     )
+    is_pypi_package: str = click.prompt("Create pypi package? (y/N)", default="n", type=str)
 
     # Copy template files
     template_path: Path = BASE_PATH / "template"
@@ -125,7 +126,21 @@ def create_project() -> None:
     if need_tests.lower() == "y":
         shutil.copytree(template_path / "tests", project_path / "tests")
     if github_action.lower() == "y":
-        shutil.copytree(template_path / "github_action", project_path / ".github")
+        _github_action_path = project_path / ".github"
+        _github_action_path.mkdir(exist_ok=True, parents=True)
+        shutil.copy(
+            template_path / "github_action" / "workflows" / "test.yml",
+            _github_action_path / "test.yml",
+        )
+        shutil.copy(
+            template_path / "github_action" / "workflows" / "bumpversion.yml",
+            _github_action_path / "bumpversion.yml",
+        )
+        if is_pypi_package.lower() == "y":
+            shutil.copy(
+                template_path / "github_action" / "workflows" / "pythonpublish.yml",
+                _github_action_path / "pythonpublish.yml",
+            )
 
     # create pyproject.toml
     shutil.copy(template_path / "pyproject.template", project_path / "pyproject.toml")
@@ -136,6 +151,7 @@ def create_project() -> None:
         project_name=project_path.name,
         project_description=description,
         author=author,
+        is_pypi_package=is_pypi_package.lower(),
         python_version=python_version.strip("^"),
         project_license=project_license,
         need_tests=need_tests.lower(),
