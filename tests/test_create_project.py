@@ -130,8 +130,8 @@ def test_create_project(runner, mock_poetry_installed, monkeypatch, rootdir, pro
     assert (project_path / "tests" / "test_sample.py").exists()
     assert (project_path / "README.md").exists()
     assert (project_path / ".github" / "test.yml").exists()
-    assert (project_path / ".bumpversion" / "test.yml").exists()
-    assert (project_path / ".pythonpublish" / "test.yml").exists()
+    assert (project_path / ".github" / "bumpversion.yml").exists()
+    assert (project_path / ".github" / "pythonpublish.yml").exists()
     assert (project_path / "scripts").exists()
     assert (project_path / "scripts" / "commit_with_pre_commit.py").exists()
 

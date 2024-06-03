@@ -128,14 +128,17 @@ def create_project() -> None:
     if github_action.lower() == "y":
         _github_action_path = project_path / ".github"
         _github_action_path.mkdir(exist_ok=True, parents=True)
-        shutil.copy(template_path / "github_action" / "test.yml", _github_action_path / "test.yml")
         shutil.copy(
-            template_path / "github_action" / "bumpversion.yml",
+            template_path / "github_action" / "workflows" / "test.yml",
+            _github_action_path / "test.yml",
+        )
+        shutil.copy(
+            template_path / "github_action" / "workflows" / "bumpversion.yml",
             _github_action_path / "bumpversion.yml",
         )
         if is_pypi_package.lower() == "y":
             shutil.copy(
-                template_path / "github_action" / "pythonpublish.yml",
+                template_path / "github_action" / "workflows" / "pythonpublish.yml",
                 _github_action_path / "pythonpublish.yml",
             )
 
