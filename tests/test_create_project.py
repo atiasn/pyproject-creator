@@ -147,7 +147,7 @@ def test_create_project(runner, mock_poetry_installed, monkeypatch, rootdir, pro
         assert "[tool.poetry.dependencies]" in content
         assert "[tool.poetry.group.dev.dependencies]" in content
         assert "[tool.poetry.scripts]" not in content
-        assert not "package-mode = false" in content
+        assert "package-mode = false" not in content
 
     # Verify content of test_sample.py
     with open(project_path / "tests" / "test_sample.py") as f:

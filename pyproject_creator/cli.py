@@ -110,9 +110,7 @@ def create_project() -> None:
     github_action: str = click.prompt(
         "Create github action for project(master branch)? (y/N)", default="n", type=str
     )
-    is_pypi_package: str = click.prompt(
-        "Create pypi package? (y/N)", default="n", type=str
-    )
+    is_pypi_package: str = click.prompt("Create pypi package? (y/N)", default="n", type=str)
 
     # Copy template files
     template_path: Path = BASE_PATH / "template"
@@ -130,10 +128,18 @@ def create_project() -> None:
     if github_action.lower() == "y":
         _github_action_path = project_path / ".github"
         _github_action_path.mkdir(exist_ok=True, parents=True)
-        shutil.copy(_github_action_path / "github_action" / "test.yml", _github_action_path / "test.yml")
-        shutil.copy(_github_action_path / "github_action" / "bumpversion.yml", _github_action_path / "bumpversion.yml")
+        shutil.copy(
+            _github_action_path / "github_action" / "test.yml", _github_action_path / "test.yml"
+        )
+        shutil.copy(
+            _github_action_path / "github_action" / "bumpversion.yml",
+            _github_action_path / "bumpversion.yml",
+        )
         if is_pypi_package.lower() == "y":
-            shutil.copy(_github_action_path / "github_action" / "pythonpublish.yml", _github_action_path / "pythonpublish.yml")
+            shutil.copy(
+                _github_action_path / "github_action" / "pythonpublish.yml",
+                _github_action_path / "pythonpublish.yml",
+            )
 
     # create pyproject.toml
     shutil.copy(template_path / "pyproject.template", project_path / "pyproject.toml")
