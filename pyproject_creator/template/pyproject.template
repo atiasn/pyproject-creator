@@ -5,7 +5,11 @@ description = "{{ project_description }}"
 authors = ["{{ author }}"]
 {% if project_license %}license = "{{ project_license }}"
 {% endif -%}
+package-mode = {{ is_pypi_package }}
+{% if is_pypi_package == "n" %}package-mode = false
+{% endif -%}
 readme = "README.md"
+
 
 [[tool.poetry.source]]
 name = "tuna"
@@ -20,6 +24,7 @@ python = "^{{ python_version }}"
 [tool.poetry.group.dev.dependencies]
 {% if need_tests == "y" %}pytest = "^8.2.1"
 {% endif -%}
+mypy = "^1.10.0"
 isort = "^5.13.2"
 black = "^24.4.2"
 pre-commit-hooks = "^4.6.0"
@@ -43,12 +48,18 @@ profile = "black"
 line_length = 99
 length_sort = true
 skip_gitignore = true
-force_sort_within_sections = true
 src_paths = ["{{ project_src_name }}"{% if need_tests == "y" %}, "tests"{% endif -%}]
 extra_standard_library = ["typing_extensions"]
+multi_line_output = 3
+add_imports = ["from __future__ import annotations"]
+color_output = true
+length_sort_straight = true
+lines_after_imports = 2
+extend_skip = [".md", ".json", ".yml", ".yaml", ".toml", ".dockerignore", ".gitignore", ".template"]
 
 [tool.ruff]
 line-length = 99
+show-fixes = true
 target-version = "py311"
 src = ["{{ project_src_name }}"{% if need_tests == "y" %}, "tests"{% endif -%}]
 

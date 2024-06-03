@@ -106,6 +106,7 @@ def test_create_project(runner, mock_poetry_installed, monkeypatch, rootdir, pro
                 "Y",  # Create logs package
                 "Y",  # Create tests directory
                 "Y",  # Create github actions
+                "Y",  # Create pypi
             ]
         )
         + "\n"
@@ -128,7 +129,9 @@ def test_create_project(runner, mock_poetry_installed, monkeypatch, rootdir, pro
     assert (project_path / "tests").exists()
     assert (project_path / "tests" / "test_sample.py").exists()
     assert (project_path / "README.md").exists()
-    assert (project_path / ".github").exists()
+    assert (project_path / ".github" / "test.yml").exists()
+    assert (project_path / ".bumpversion" / "test.yml").exists()
+    assert (project_path / ".pythonpublish" / "test.yml").exists()
     assert (project_path / "scripts").exists()
     assert (project_path / "scripts" / "commit_with_pre_commit.py").exists()
 
@@ -144,6 +147,7 @@ def test_create_project(runner, mock_poetry_installed, monkeypatch, rootdir, pro
         assert "[tool.poetry.dependencies]" in content
         assert "[tool.poetry.group.dev.dependencies]" in content
         assert "[tool.poetry.scripts]" not in content
+        assert not "package-mode = false" in content
 
     # Verify content of test_sample.py
     with open(project_path / "tests" / "test_sample.py") as f:
@@ -170,6 +174,7 @@ def test_create_project_without_tests_logs(  # type: ignore
                 "n",  # Create logs package
                 "n",  # Create tests directory
                 "n",  # Create github actions
+                "n",  # create pypi
             ]
         )
         + "\n"
@@ -211,6 +216,7 @@ def test_create_project_without_tests_logs(  # type: ignore
         assert "[tool.poetry.scripts]" not in content
         assert "pytest" not in content
         assert "loguru" not in content
+        assert "package-mode = false" in content
 
 
 if __name__ == "__main__":
