@@ -1,3 +1,9 @@
+## v0.3.0 (2024-06-03)
+
+### Feat
+
+- template add pypi github action (#15)
+
 ## v0.2.1 (2024-05-31)
 
 ### Fix
