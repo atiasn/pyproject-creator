@@ -1,3 +1,9 @@
+## v0.3.1 (2024-06-04)
+
+### Hotfix
+
+- update readme and poetry.lock (#16)
+
 ## v0.3.0 (2024-06-03)
 
 ### Feat
