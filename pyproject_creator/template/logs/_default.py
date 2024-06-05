@@ -29,8 +29,8 @@ logger: Logger = loguru.logger
 #     logging.Formatter("[%(asctime)s %(name)s] %(levelname)s: %(message)s"))
 # logger.addHandler(default_handler)
 
-LOG_LEVEL = "<set level>"
-LOG_SENSITIZE = "<set sensitive>"  # True or False
+LOG_LEVEL = "DEBUG"
+LOG_SENSITIZE_KEYS = ["Cookie"]
 PROJECT_NAME = "<set project name>"
 
 
@@ -51,39 +51,44 @@ class LoguruHandler(logging.Handler):  # pragma: no cover
         logger.opt(depth=depth, exception=record.exc_info).log(level, record.getMessage())
 
 
-def desensitize_cookie_values(cookie: str) -> str:
-    # 匹配 key=value 对，考虑结尾可能没有分号的情况
-    def replacer(match: Match[str]) -> str:
-        key = match.group(1)
-        value = match.group(2)
-        if len(value) > 6:
-            start = value[:3]
-            end = value[-3:]
-            return f"{key}={start}{'*' * 5}{end}"
-        else:
-            return f"{key}={value}"
-
-    return re.sub(r"(\w+)=([^;]+)", replacer, cookie)
+def desensitize_value(value: str) -> str:
+    if len(value) > 6:
+        start = value[:3]
+        end = value[-4:] if value.endswith("'") or value.endswith('"') else value[-3:]
+        return f"{start}{'*' * 5}{end}"
+    else:
+        return value
 
 
-def desensitize_cookie_data(message: str) -> str:
-    # 用于匹配整个 'Cookie: ...' 头部，并只对该部分进行脱敏
-    pattern = r"'Cookie': '([^']+)'"
-
+def desensitize_data(message: str, keywords: list[str]) -> str:
     def header_replacer(match: Match[str]) -> str:
-        cookie = match.group(1)
-        return f"'Cookie': '{desensitize_cookie_values(cookie)}'"
+        key = match.group(1)
+        quotes1 = match.group(2)
+        value = match.group(3)
+        if value and key:
+            return key + quotes1 + desensitize_value(value)
+        else:
+            return match.group(0)
 
-    return re.sub(pattern, header_replacer, message)
+    for keyword in keywords:
+        message = re.sub(
+            rf"(['\"]?{keyword}['\"]?[=:]\s?)(['\"]?)(.*?['\"]?[^;,]+)",
+            header_replacer,
+            message,
+            flags=re.IGNORECASE,
+        )
+    return message
 
 
 def default_filter(record: Record) -> bool:
     log_level = LOG_LEVEL
     levelno = logger.level(log_level).no if isinstance(log_level, str) else log_level
-    if LOG_SENSITIZE:
-        record["message"] = desensitize_cookie_data(record["message"])
+    if LOG_SENSITIZE_KEYS:
+        record["message"] = desensitize_data(record["message"], LOG_SENSITIZE_KEYS)
     return int(record["level"].no) >= int(levelno)
 
+
+logging.basicConfig(handlers=[LoguruHandler()], level=logging.DEBUG)
 
 logger.remove()
 
