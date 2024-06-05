@@ -21,7 +21,7 @@ import loguru
 if TYPE_CHECKING:
     from loguru import Logger, Record
 
-logger: "Logger" = loguru.logger
+logger: Logger = loguru.logger
 
 
 # default_handler = logging.StreamHandler(sys.stdout)

@@ -1,67 +1,80 @@
 # Pyproject Creator
+![test](https://github.com/atiasn/pyproject-creator/actions/workflows/test.yml/badge.svg?branch=master)
+[![PyPI - Version](https://img.shields.io/pypi/v/pyproject-creator)](https://pypi.org/project/pyproject-creator/)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pyproject-creator)
 [![Poetry](https://img.shields.io/endpoint?url=https://python-poetry.org/badge/v0.json)](https://python-poetry.org/)
 
-Pyproject Creator is a tool designed to simplify the process of creating Python projects. It sets up a project structure with essential components such as Poetry for package management, pre-commit for code formatting and linting, logs package, tests using pytest, and optionally, a GitHub Action workflow.
+
+Pyproject Creator is a tool designed to simplify the process of creating Python projects. It generates some basic project structure components.
+
+Basic components:
+
+- Poetry for package management
+- pre-commit for code formatting and linting
+- Commitizen for standardized git commits
+
+Optional components:
+
+- Logging
+- Testing with pytest
+- GitHub Action workflows, etc.
 
 ## Installation
 
-To use Pyproject Creator, ensure you have Python installed on your system. Then, follow these steps:
+### Dependencies
 
-1. **Clone the Repository**: Clone the Pyproject Creator repository to your local machine.
+The project depends on the following libraries:
+- **python 3.11+**: https://www.python.org/downloads/
+- **poetry 1.8.3+**: https://python-poetry.org/docs/
 
-2. **Install Dependencies**: Navigate to the repository directory and run the following command to install dependencies:
+### Source Installation
 
-    ```bash
-    poetry install
-    ```
+Follow these steps for source installation:
 
-3. **Set Up Environment**: Activate the virtual environment created by Poetry:
+1. **Clone the repository**: Clone the Pyproject Creator repository to your local computer.
+   ```bash
+   git clone https://github.com/atiasn/pyproject-creator.git
+   cd pyproject-creator
+   ```
 
-    ```bash
-    poetry shell
-    ```
+2. **Install dependencies**: Navigate to the repository directory and run the following command to install dependencies:
+   ```bash
+   poetry install --only main
+   ```
 
-4. **Run the Tool**: Execute the following command to run Pyproject Creator:
-
-    ```bash
-    pypct
-    ```
+3. **Run the tool**: Execute the following command to run Pyproject Creator:
+   ```bash
+   pypct
+   ```
 
 ## Usage
 
-Upon running Pyproject Creator, you will be prompted to provide details about your project:
+After running Pyproject Creator, you will be prompted to provide details about your project:
 
-- **Project Name**: Enter a name for your project. The name should start with a letter or number and contain only letters, numbers, underscores, and hyphens, but should not start or end with underscores or hyphens.
+- **Project Name**: Enter the project name. The name should start with a letter or number, contain only letters, numbers, underscores, and hyphens, and should not start or end with an underscore or hyphen.
 
-- **Project Description**: Provide a brief description of your project.
+- **Project Description**: Provide a brief description of the project, which is empty by default.
 
-- **Author Name**: Enter your name and email address in the specified format.
+- **Author Name**: Enter your name and email address in the specified format, as: "Your Name <your.email@example.com>".
 
-- **Python Version**: Specify the Python version you want to use for your project.
+- **Python Version**: Specify the Python version you want to use for the project, with 3.11 as the default.
 
-- **Project License**: Choose a license for your project.
+- **Project License**: Choose the license for your project, which is empty by default.
 
-- **Create Logs Package**: Choose whether to create a logs package within your project.
+- **Create Logging Package**: Choose whether to create a logging package in the project, with 'yes' as the default.
 
-- **Create Tests Directory**: Choose whether to include a directory for tests using pytest.
+- **Create Test Directory**: Choose whether to include a test directory using pytest, with 'yes' as the default.
 
-- **Create GitHub Action**: Choose whether to create a GitHub Action workflow for the master branch of your project.
+- **Create GitHub Action**: Choose whether to create a GitHub Action workflow for the main branch of your project, with 'no' as the default.
 
-Once you have provided the necessary details, Pyproject Creator will set up your project structure and configure the necessary files. Follow the on-screen instructions to complete the process.
+- **Publish to PyPI**: Choose whether to publish the project to PyPI, with 'no' as the default.
 
-## Dependencies
+After providing the necessary details, Pyproject Creator will set up your project structure and configure the necessary files. Follow the on-screen instructions to complete the process.
 
-Pyproject Creator relies on the following dependencies:
+## Contribution
 
-- **Poetry**: For Python package management.
-- **Jinja2**: For template rendering.
-
-## Contributing
-
-Contributions to Pyproject Creator are welcome! If you encounter any issues or have suggestions for improvements, please feel free to open an issue or submit a pull request on the [GitHub repository](https://github.com/atiasn/pyproject-creator).
+Contributions to Pyproject Creator are welcome! If you encounter any issues or have suggestions for improvement, feel free to raise an issue or submit a pull request on the [GitHub repository](https://github.com/atiasn/pyproject-creator).
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](../LICENSE) file for details.
-
----
+This project is licensed under the MIT License. For more details, please refer to the [LICENSE](../LICENSE) file.
