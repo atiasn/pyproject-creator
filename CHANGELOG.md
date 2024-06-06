@@ -1,3 +1,9 @@
+## v0.3.2 (2024-06-06)
+
+### Hotfix
+
+- pytest logger function (#17)
+
 ## v0.3.1 (2024-06-04)
 
 ### Hotfix
