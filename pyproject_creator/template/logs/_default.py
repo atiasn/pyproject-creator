@@ -10,10 +10,8 @@ from __future__ import annotations
 
 import re
 import sys
-import inspect
-import logging
 from re import Match
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import loguru
 
@@ -24,31 +22,9 @@ if TYPE_CHECKING:
 logger: Logger = loguru.logger
 
 
-# default_handler = logging.StreamHandler(sys.stdout)
-# default_handler.setFormatter(
-#     logging.Formatter("[%(asctime)s %(name)s] %(levelname)s: %(message)s"))
-# logger.addHandler(default_handler)
-
-LOG_LEVEL = "DEBUG"
+LOG_LEVEL = "INFO"
 LOG_SENSITIZE_KEYS = ["Cookie"]
 PROJECT_NAME = "<set project name>"
-
-
-class LoguruHandler(logging.Handler):  # pragma: no cover
-    """logging 与 loguru 之间的桥梁，将 logging 的日志转发到 loguru。"""
-
-    def emit(self, record: logging.LogRecord) -> None:
-        try:
-            level: int | str = logger.level(record.levelname).name
-        except ValueError:
-            level = record.levelno
-
-        frame, depth = inspect.currentframe(), 0
-        while frame and (depth == 0 or frame.f_code.co_filename == logging.__file__):
-            frame = frame.f_back
-            depth += 1
-
-        logger.opt(depth=depth, exception=record.exc_info).log(level, record.getMessage())
 
 
 def desensitize_value(value: str) -> str:
@@ -80,15 +56,13 @@ def desensitize_data(message: str, keywords: list[str]) -> str:
     return message
 
 
-def default_filter(record: Record) -> bool:
+def default_filter(record: Record | dict[str, Any]) -> bool:
     log_level = LOG_LEVEL
     levelno = logger.level(log_level).no if isinstance(log_level, str) else log_level
     if LOG_SENSITIZE_KEYS:
         record["message"] = desensitize_data(record["message"], LOG_SENSITIZE_KEYS)
     return int(record["level"].no) >= int(levelno)
 
-
-logging.basicConfig(handlers=[LoguruHandler()], level=logging.DEBUG)
 
 logger.remove()
 
