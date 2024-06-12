@@ -13,7 +13,7 @@ from pyproject_creator.template.logs._default import (
 )
 
 
-@pytest.fixture  # type: ignore
+@pytest.fixture
 def caplog(caplog: LogCaptureFixture) -> Iterator[LogCaptureFixture]:
     """Emitting logs from loguru's logger.log means that they will not show up in
     caplog which only works with Python's standard logging. This adds the same

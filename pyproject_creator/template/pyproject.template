@@ -6,8 +6,6 @@ authors = ["{{ author }}"]
 {% if project_license %}license = "{{ project_license }}"
 {% endif -%}
 package-mode = {{ is_pypi_package }}
-{% if is_pypi_package == "n" %}package-mode = false
-{% endif -%}
 readme = "README.md"
 
 
@@ -17,12 +15,12 @@ url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 priority = "primary"
 
 [tool.poetry.dependencies]
-{% if need_logs == "y" %}loguru = "^0.7.2"
+{% if need_logs %}loguru = "^0.7.2"
 {% endif -%}
 python = "^{{ python_version }}"
 
 [tool.poetry.group.dev.dependencies]
-{% if need_tests == "y" %}pytest = "^8.2.1"
+{% if need_tests %}pytest = "^8.2.1"
 {% endif -%}
 mypy = "^1.10.0"
 isort = "^5.13.2"
@@ -40,7 +38,7 @@ extend-exclude = '''
 
 [tool.mypy]
 strict = true
-files = ["pyproject_creator"{% if need_tests == "y" %}, "tests"{% endif -%}]
+files = ["pyproject_creator"{% if need_tests %}, "tests"{% endif -%}]
 pretty = true
 
 [tool.isort]
@@ -48,7 +46,7 @@ profile = "black"
 line_length = 99
 length_sort = true
 skip_gitignore = true
-src_paths = ["{{ project_src_name }}"{% if need_tests == "y" %}, "tests"{% endif -%}]
+src_paths = ["{{ project_src_name }}"{% if need_tests %}, "tests"{% endif -%}]
 extra_standard_library = ["typing_extensions"]
 multi_line_output = 3
 add_imports = ["from __future__ import annotations"]
@@ -61,7 +59,7 @@ extend_skip = [".md", ".json", ".yml", ".yaml", ".toml", ".dockerignore", ".giti
 line-length = 99
 show-fixes = true
 target-version = "py311"
-src = ["{{ project_src_name }}"{% if need_tests == "y" %}, "tests"{% endif -%}]
+src = ["{{ project_src_name }}"{% if need_tests %}, "tests"{% endif -%}]
 
 [tool.ruff.lint]
 select = [
@@ -74,7 +72,7 @@ select = [
     "T10",  # flake8-debugger
     "T20",  # flake8-print
     "PYI",  # flake8-pyi
-    {% if need_tests == "y" %}"PT",  # flake8-pytest-style
+    {% if need_tests %}"PT",  # flake8-pytest-style
     {% endif -%}
     "Q",  # flake8-quotes
     "RUF"  # Ruff-specific rules
@@ -93,7 +91,7 @@ inline-quotes = "double"
 multiline-quotes = "double"
 docstring-quotes = "double"
 
-{% if need_tests == "y" %}[tool.ruff.lint.flake8-pytest-style]
+{% if need_tests %}[tool.ruff.lint.flake8-pytest-style]
 fixture-parentheses = false
 mark-parentheses = false
 

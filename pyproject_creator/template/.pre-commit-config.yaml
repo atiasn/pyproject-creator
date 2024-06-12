@@ -67,7 +67,8 @@ repos:
     hooks:
       - id: mypy
         args: [--strict, --ignore-missing-imports]
-        additional_dependencies: [pydantic]
+        # https://stackoverflow.com/questions/75645065/error-untyped-decorator-typeguard-makes-function-add-two-untyped-misc
+        additional_dependencies: [pydantic, pytest]
         stages: [commit]
 
   - repo: https://github.com/commitizen-tools/commitizen

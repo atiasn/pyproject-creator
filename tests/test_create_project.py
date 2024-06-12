@@ -12,12 +12,12 @@ from _pytest.monkeypatch import MonkeyPatch
 from pyproject_creator.cli import run_command, create_project, check_poetry_installed
 
 
-@pytest.fixture  # type: ignore
+@pytest.fixture
 def runner() -> CliRunner:
     return CliRunner()
 
 
-@pytest.fixture  # type: ignore
+@pytest.fixture
 def mock_poetry_installed(monkeypatch: MonkeyPatch) -> None:
     def mock_run(*args, **kwargs):  # type: ignore
         if args[0][:2] == ["poetry", "--version"]:
