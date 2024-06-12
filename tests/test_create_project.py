@@ -148,6 +148,7 @@ def test_create_project(runner, mock_poetry_installed, monkeypatch, rootdir, pro
         assert "[tool.poetry.group.dev.dependencies]" in content
         assert "[tool.poetry.scripts]" not in content
         assert "package-mode = false" not in content
+        assert "pyproject-creator" not in content
 
     # Verify content of test_sample.py
     with open(project_path / "tests" / "test_sample.py") as f:
@@ -217,6 +218,7 @@ def test_create_project_without_tests_logs(  # type: ignore
         assert "pytest" not in content
         assert "loguru" not in content
         assert "package-mode = false" in content
+        assert "pyproject-creator" not in content
 
 
 if __name__ == "__main__":

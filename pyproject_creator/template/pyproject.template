@@ -38,7 +38,7 @@ extend-exclude = '''
 
 [tool.mypy]
 strict = true
-files = ["pyproject_creator"{% if need_tests %}, "tests"{% endif -%}]
+files = ["{{ project_src_name }}"{% if need_tests %}, "tests"{% endif -%}]
 pretty = true
 
 [tool.isort]
