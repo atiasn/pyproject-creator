@@ -65,52 +65,98 @@ def create_file(file_path: Path | str, content: str | None = None) -> None:
         f.write(content)
 
 
-def prompt_project_details() -> tuple[Path, Path]:
+def prompt_project_details(value: str) -> tuple[Path, Path]:
     """Prompt the user for project details and create the project directory structure."""
-    for _ in range(5):
-        project_name: str = click.prompt("Project name", type=str)
-        try:
-            validate_project_name(project_name)
-        except click.BadParameter as e:
-            click.echo(f"Error: {e}")
-            continue
+    validate_project_name(value)
+    project_path: Path = Path(value).resolve()
+    if project_path.exists():
+        click.echo(f"Error: {value} directory already exists.")
+        exit(1)
 
-        project_path: Path = Path(project_name).resolve()
-        if project_path.exists():
-            click.echo(f"Error: {project_name} directory already exists.")
-            continue
+    project_path.mkdir()
+    os.chdir(project_path)
 
-        project_path.mkdir()
-        os.chdir(project_path)
-
-        src_path: Path = project_path / project_name.replace("-", "_")
-        src_path.mkdir()
-        create_file(src_path / "__init__.py")
-        return project_path, src_path
-
-    click.echo("Too many attempts. Exiting.")
-    exit(1)
+    src_path: Path = project_path / value.replace("-", "_")
+    src_path.mkdir()
+    create_file(src_path / "__init__.py")
+    return project_path, src_path
 
 
 @click.command()  # type: ignore
-def create_project() -> None:
+@click.option("--name", prompt="Project name", required=True, help="Enter the project name.")
+@click.option(
+    "--description",
+    prompt="Project description",
+    default="",
+    help="Provide a brief description of the project.",
+)
+@click.option(
+    "--author",
+    prompt="Author name",
+    default="Your Name <your.email@example.com>",
+    help="Enter the author's name and email.",
+)
+@click.option(
+    "--python-version",
+    prompt="Python version",
+    default="3.11",
+    help="Specify the Python version to use.",
+)
+@click.option(
+    "--project-license",
+    prompt="Project license",
+    default="",
+    help="Specify the license for the project.",
+)
+@click.option(
+    "--pypi-package",
+    prompt="Create pypi package?",
+    type=bool,
+    is_flag=True,
+    default=False,
+    help="Do you want to create a PyPI package? Enter 'y' or 'N'.",
+)
+@click.option(
+    "--logs",
+    "--need-logs",
+    prompt="Create logs package?",
+    type=bool,
+    is_flag=True,
+    default=True,
+    help="Do you need a logs package? Enter 'Y' or 'n'.",
+)
+@click.option(
+    "--tests",
+    "--need-tests",
+    prompt="Create tests(pytest) directory?",
+    type=bool,
+    is_flag=True,
+    default=True,
+    help="Do you need a tests directory for pytest? Enter 'Y' or 'n'.",
+)
+@click.option(
+    "--github-action",
+    prompt="Create github action for project(master branch)?",
+    type=bool,
+    is_flag=True,
+    default=False,
+    help="Do you want to create a GitHub action for the master branch? Enter 'y' or 'N'.",
+)
+def create_project(
+    name: str,
+    description,
+    author,
+    python_version,
+    project_license,
+    logs,
+    tests,
+    github_action,
+    pypi_package,
+) -> None:
     """Create a new Python project with Poetry, pre-commit, logs, tests."""
 
     # Prompt for project details
-    project_path, src_path = prompt_project_details()
-
-    description: str = click.prompt("Project description", default="", type=str)
-    author: str = click.prompt(
-        "Author name", default="Your Name <your.email@example.com>", type=str
-    )
-    python_version: str = click.prompt("Python version", default="3.11", type=str)
-    project_license: str = click.prompt("Project license", default="", type=str)
-    need_logs: str = click.prompt("Create logs package? (Y/n)", default="Y", type=str)
-    need_tests: str = click.prompt("Create tests(pytest) directory? (Y/n)", default="Y", type=str)
-    github_action: str = click.prompt(
-        "Create github action for project(master branch)? (y/N)", default="n", type=str
-    )
-    is_pypi_package: str = click.prompt("Create pypi package? (y/N)", default="n", type=str)
+    project_path, src_path = prompt_project_details(name)
 
     # Copy template files
     template_path: Path = BASE_PATH / "template"
@@ -121,11 +167,11 @@ def create_project() -> None:
     )
     shutil.copy(template_path / ".cz.toml", project_path / ".cz.toml")
     shutil.copytree(template_path / "scripts", project_path / "scripts")
-    if need_logs.lower() == "y":
+    if logs:
         shutil.copytree(template_path / "logs", project_path / src_path / "logs")
-    if need_tests.lower() == "y":
+    if logs:
         shutil.copytree(template_path / "tests", project_path / "tests")
-    if github_action.lower() == "y":
+    if github_action:
         _github_action_path = project_path / ".github"
         _github_action_path.mkdir(exist_ok=True, parents=True)
         shutil.copy(
@@ -136,7 +182,7 @@ def create_project() -> None:
             template_path / "github_action" / "workflows" / "bumpversion.yml",
             _github_action_path / "bumpversion.yml",
         )
-        if is_pypi_package.lower() == "y":
+        if pypi_package:
             shutil.copy(
                 template_path / "github_action" / "workflows" / "pythonpublish.yml",
                 _github_action_path / "pythonpublish.yml",
@@ -151,11 +197,11 @@ def create_project() -> None:
         project_name=project_path.name,
         project_description=description,
         author=author,
-        is_pypi_package=is_pypi_package.lower(),
+        is_pypi_package="true" if pypi_package else "false",
         python_version=python_version.strip("^"),
         project_license=project_license,
-        need_tests=need_tests.lower(),
-        need_logs=need_logs.lower(),
+        need_tests=tests,
+        need_logs=tests,
         project_src_name=src_path.name,
     )
 
